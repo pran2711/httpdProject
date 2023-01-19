@@ -1,0 +1,12 @@
+node {
+    stage("git checkout"){
+        git 'https://github.com/pran2711/httpdProject.git'
+    }
+    
+    stage("copying source code from jenkins to webserver"){
+        sshagent(['ec2']) {
+    sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.32.200'
+    sh 'scp -r /var/lib/jenkins/workspace/p1pipeline/* ec2-user@172.31.32.200:/var/www/html'
+   }
+    }
+} 
